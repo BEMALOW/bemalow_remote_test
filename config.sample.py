@@ -1,0 +1,6 @@
+class CONFIG:
+    HOST = 'IP.ADDRESS'
+    PORT = 3306
+    USER = 'USERNAME'
+    PASSWORD = 'PASSWORD'
+    DATABASE = 'DATABASE'
