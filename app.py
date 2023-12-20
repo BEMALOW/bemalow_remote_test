@@ -3,7 +3,7 @@ import pymysql
 import time
 from config import CONFIG
 
-app = APIFlask(__name__)
+app = APIFlask(__name__,enable_openapi=False)
 auth = HTTPTokenAuth()
 
 trigger = 0
@@ -98,7 +98,7 @@ def coin_pin():
     coin = cdb.use_coin(user)
     if coin:
         print("成功扣除")
-        # TODO:在这里执行将引脚设置为低电平的操作
+        # 使用全局变量记录对应引脚设置为低电平的操作次数
         global trigger,trigger_button,trigger_times
         trigger = 1
         trigger_times += 1
@@ -114,7 +114,7 @@ def coin_pin():
 @app.get('/test_pin')
 @auth.login_required
 def test_pin():
-    # 在这里执行将引脚设置为低电平的操作
+    # 在这里使用全局变量执行将对应引脚设置为低电平的操作
     user = auth.current_user
     global trigger,trigger_button
     trigger = 1
@@ -123,4 +123,4 @@ def test_pin():
     return {'status': 'success', 'message': f'{user} trigger TEST Pin'}
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.103',port='5000',debug=True)
+    app.run(debug=True)
